@@ -1,4 +1,4 @@
-﻿namespace OperatorOverloadingExcercise3
+namespace OperatorOverloadingExcercise3
 {
     internal class Cooking
     {
@@ -17,6 +17,11 @@
         public static Cooking operator +(Cooking thingToCook, int num)
         {
             thingToCook.TotalIngredients += num;
+            return thingToCook;
+        }
+        public static Cooking operator +(Cooking thingToCook, double num)
+        {
+            thingToCook.TotalIngredients += (int)num;
             return thingToCook;
         }
         public static bool operator >(Cooking thingToCook1, Cooking thingToCook2)
@@ -66,9 +71,9 @@
                 Console.WriteLine("Enter the number of minutes to complete cooking: ");
                 day1Meals[day1Counter].MinutesToComplete = double.Parse(Console.ReadLine());
                 //Accumulate totals in element 0
-                day1Meals[0].TotalThingsToCook++; //unary
-                day1Meals[0].TotalIngredients += day1Meals[day1Counter].NumberOfIngredients; //binary
-                day1Meals[0].TotalMinutes += day1Meals[day1Counter].MinutesToComplete; //binary
+                day1Meals[0]++; //unary
+                day1Meals[0]+= day1Meals[day1Counter].NumberOfIngredients; //binary
+                day1Meals[0]+= day1Meals[day1Counter].MinutesToComplete; //binary
                 Console.WriteLine("Do you want to continue adding things you want to cook? (any key for yes, Q to quit)");
                 string evenMoreFood = Console.ReadLine();
                 if (evenMoreFood.ToLower() == "q" || day1Counter >= 10)
@@ -89,9 +94,9 @@
                 Console.WriteLine("Enter the number of minutes to complete cooking: ");
                 day2Meals[day2Counter].MinutesToComplete = double.Parse(Console.ReadLine());
                 //Accumulate totals in element 0
-                day2Meals[0].TotalThingsToCook++; //unary
-                day2Meals[0].TotalIngredients += day2Meals[day2Counter].NumberOfIngredients; //binary
-                day2Meals[0].TotalMinutes += day2Meals[day2Counter].MinutesToComplete; //binary
+                day2Meals[0]++; //unary
+                day2Meals[0]+= day2Meals[day2Counter].NumberOfIngredients; //binary
+                day2Meals[0]+= day2Meals[day2Counter].MinutesToComplete; //binary
                 Console.WriteLine("Do you want to continue adding things you want to cook? (any key for yes, Q to quit)");
                 string evenMoreFood = Console.ReadLine();
                 if (evenMoreFood.ToLower() == "q" || day2Counter >= 10)
@@ -130,7 +135,7 @@
             Console.WriteLine();
             Console.WriteLine("***********************************************");
             //using overloaded >
-            if (day1Meals[0].TotalMinutes > day2Meals[0].TotalMinutes)
+            if (day1Meals[0] > day2Meals[0])
             {
                 double difference = day1Meals[0].TotalMinutes - day2Meals[0].TotalMinutes;
                 Console.WriteLine($"It took {difference} more minutes to cook food yesterday than it did today!");
